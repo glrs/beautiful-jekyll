@@ -109,9 +109,15 @@ img {
   background-color: {{ site.navbar-col }};
   border-bottom: 1px solid #EAEAEA;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  {% assign now-date = "now" | date: "%Y-%m-%d" %}
+  {% if now-date == "2019-12-13" %}
+  background-image: url({{ site.special-img | relative_url }});
+  background-attachment: fixed;
+  {% else %}
   {% if site.navbar-img %}
   background-image: url({{ site.navbar-img | relative_url }});
   background-attachment: fixed;
+  {% endif %}
   {% endif %}
 }
 
@@ -266,9 +272,15 @@ footer {
   margin-top: 50px;
   font-size: 14px;
   background-color: {{ site.footer-col }};
+  {% assign now-date = "now" | date: "%Y-%m-%d" %}
+  {% if now-date == "2019-12-13" %}
+  background-image: url({{ site.xmas-footer-img | relative_url }});
+  background-attachment: fixed;
+  {% else %}
   {% if site.footer-img %}
   background-image: url({{ site.footer-img | relative_url }});
   background-attachment: fixed;
+  {% endif %}
   {% endif %}
 }
 
@@ -667,6 +679,9 @@ table tr td :last-child {
 pre {
   font-size: 16px;
   line-height: 1.5em;
+}
+pre code {
+  white-space: pre;
 }
 .highlight pre {
   border: none;
