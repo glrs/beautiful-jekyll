@@ -373,9 +373,11 @@ Follow these steps to make it work yourself:
    * Install the [_Google Assistant Service_](https://developers.google.com/assistant/sdk/overview)
    * Install [_Snowboy_](https://snowboy.kitt.ai), and train/configure your own hotword model
    * Do the appropriate tests to ensure your mic and speakers are functional and configured correctly
-2. Download my corrected demo version [demo_assist.py](), and place it in `snowboy/examples/Python3`
-3. Download my corrected version of the Google Assistant _push-to-talk_ [invoke_assistant.py](), and also place it in `snowboy/examples/Python3`
+2. Download my corrected demo version [demo_assist.py](https://drive.google.com/file/d/1P71b6gsRvMl9gPqyu7dceMPmwudojvW9/view?usp), and place it in `snowboy/examples/Python3`
+3. Download my corrected version of the Google Assistant _push-to-talk_ [call_assistant.py](https://drive.google.com/file/d/1RmIGO3dfL6lZ4cC7Xwo_lm8MCdH-WYMe/view?usp), and also place it in `snowboy/examples/Python3`
 4. Run ```$ python demo_assist.py```
 5. Enjoy chatting with your new assistant :)
 
-I hope you found this post helpful. Let me know below if you think I missed anything, or if something didn't work for you as explained.
+I hope you found this post helpful. Let me know below if you think I missed anything, and I'd love if you share any cool projects you created on it :D
+
+I'm out for creating mine now. Cheers!
