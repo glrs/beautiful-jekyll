@@ -318,6 +318,16 @@ footer .theme-by {
   }
 }
 
+/*
+.fa-stack .fa { color: black; }
+.fa-stack .fa.fa-circle-thin { color: white; }
+.fa-stack .fa.fa-circle { opacity: 1.0; color: black; }
+
+.fa-stack:hover .fa.fa-envlelope { color: white; }
+.fa-stack:hover .fa.fa-circle-thin {color: black; }
+.fa-stack:hover .fa.fa-circle { opacity: 0.0 }
+*/
+
 /* --- Post preview --- */
 
 .post-preview {

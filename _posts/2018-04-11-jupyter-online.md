@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Jupyter notebook for personal online access
+tags: guide jupyter-notebook
 published: true
 ---
 

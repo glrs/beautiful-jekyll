@@ -1,45 +1,32 @@
 ---
 layout: page
 title: About me
-subtitle: A glimpse into my multifaceted personality
+subtitle:
 permalink: /about/
 ---
 
-## Raw facts
-
 <ul class="fa-ul">
-  <li><i class="fa-li fa fa-briefcase" aria-hidden="true"></i>
-I am a Bioinformatician, working at [SciLifeLab] ([Karolinska Institute]), in Stockholm.
+  <li><i class="fa-li fas fa-briefcase"></i>
+Currently, I work as a <b>Bioinformatician</b> at <a href="https://www.scilifelab.se/">SciLifeLab</a> (<a href="https://ki.se/start">Karolinska Institute</a>), in Stockholm.
   </li><br>
 
-  <li><i class="fa-li fa fa-graduation-cap" aria-hidden="true"></i>
-I acquired my MSc in Bioinformatics from Uppsala University, in 2016. Before that, I obtained my BSc in Informatics from the Technological Institute of Central Greece, in 2013.
+  <li><i class="fa-li fas fa-user-graduate" aria-hidden="true"></i>
+I acquired my MSc in <b>Bioinformatics</b> from <a href="https://www.uu.se/en">Uppsala University</a>, in 2016. Before that, I obtained my BSc in <b>Informatics</b> from the <a href="http://www.teiste.gr/">Technological Institute of Central Greece</a>, in 2013.
   </li><br>
 
-  <li><i class="fa-li fa fa-terminal" aria-hidden="true"></i> My favourite programming language is Python. It was love with the first touch. As a bioinformatician I also use a lot of shell scripting and sometimes R. In my personal projects I mostly use Python, C/C++ and rarely Javascript. For deep learning projects I use TensorFlow.
+  <li><i class="fa-li fas fa-code" aria-hidden="true"></i>
+My favourite programming language is <b>Python</b>; it was love with the first touch. As a bioinformatician I also use a lot of <b>shell scripting</b> and sometimes <b>R</b>. On my personal projects I mostly use <b>Python</b>, <b>C/C++</b> and rarely <b>Javascript</b>. For my deep learning projects I almost exclusively use <b>TensorFlow</b>.
   </li><br>
 
-  <li><i class="fa-li fa fa-coffee" aria-hidden="true"></i>
-In my free time I like exploring new AI architectures & techniques. When I feel like changing scenes, I enjoy playing with electronics (from designing and soldering circuits - to programming), networks, databases, etc. Usually, I accompany such projects with some sort of DIY crafting.
+  <li><i class="fa-li fas fa-mug-hot" aria-hidden="true"></i>
+In my free time I like exploring new <b>AI</b> architectures & techniques. When I feel like changing scenes, I enjoy playing with <b>electronics</b> (from designing and soldering circuits - to programming), <b>networks</b>, <b>databases</b>, etc. Usually, I accompany such projects with some sort of <b>DIY crafting</b>.
+  </li><br>
+
+  <li><i class="fa-li fas fa-heart"></i>
+The term <b>experience collector</b> describes me best; suggest something new and I'm in. Regularly I play <b>football</b>, go <b>bouldering</b> and <b>dancing</b>. I enjoy watching <b>Formula 1</b> and a wide variety of educational material. Lastly, I'm committed to <b>traveling</b>. I love how eye opening is to explore the world, learn history on sight and meet new cultures.
   </li><br>
 </ul>
 
-Since then, I had a strong feeling that Machine Learning and Deep Learning will be the next big thing. I also had a drive towards data analysis and a passion on putting my hands in dealing with actual issues.
+## Contact me
+If there's something interesting you'd like to talk about, click the email button below and hit me up :)
 
-When I presented my ambitions to my bachelor thesis supervisor, [Dr. Dimitris Iakovidis], I was grateful that he presented me with a few great project ideas. I ended up using Complex Event Processing and training a k-NN algorithm to detect multi-signal patterns on EEG data (thesis written in greek; title translates to _"R&D of multi-channel signal analysis methods for knowledge mining"_).
-
-Fast forward to my master's thesis, I was much more educated and hyped by the new advances, so I decided to test the ground on Deep Learning. Under the supervision of [Mikael Huss], one of the most charismatic individuals I've met, I implemented and trained a Neural Network to identify different cell types existed in single cell transcriptomic data. The project title is _"[Data-driven definition of cell types based on single-cell gene expression data]"_.
-
-### More Information
-I am a Machine Learning / Deep Learning enthousiast, so I enjoy thinking about biological solutions in terms of ML/DL. For my master thesis, I developed a Stacked Denoising AutoEncoder algorithm in order to classify (and potentially identify new) cell types (using human & mouse cortex, single cell gene expression data). You can find the code lying somewhere in my repos[.]
-
-
-### Contact me
-
-
-[SciLifeLab]: https://www.scilifelab.se/
-[Karolinska Institute]: https://ki.se/start
-[Dr. Dimitris Iakovidis]: https://is-innovation.eu/iakovidis/
-[Mikael Huss]: https://se.linkedin.com/in/mikaelhuss
-[Data-driven definition of cell types based on single-cell gene expression data]: http://www.diva-portal.org/smash/record.jsf?pid=diva2%3A942241&dswid=-3599
-[.]: https://github.com/glrs/StackedDAE

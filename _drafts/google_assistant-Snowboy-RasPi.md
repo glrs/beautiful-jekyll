@@ -1,70 +1,84 @@
 ---
 layout: post
-title: Google Assistant SDK | Snowboy | RasPi
+title: Google Assistant SDK with Snowboy on Raspberry Pi
+tags: raspberry-pi home-automation
 published: True
 ---
 
-# Google Assistant SDK | Snowboy | RasPi - 2019
-__Dec. 2019__
+Here I explain how I solved several issues I faced setting up _Google Assistant SDK_ with hotword activation on Raspberry Pi. For the hotword I used _Snowboy_, however, I had to do some work to make it work with Google Assistant. As it turned out, some of the issues I faced are known problems, discussed in several online communities. So if you are facing some of those issues, this article is for you!
 
-## INTRO
-Like many people I had the idea to build a Home Assistant, using a Raspberry Pi I had lying around. I was not sure which software to use, so I started searching around and I decided to give it a try with [GassistPi]([https://github.com/shivasiddharth/GassistPi](https://github.com/shivasiddharth/GassistPi)). `GassistPi` was built for expanding Google Assistant's features and it looked like a great choice for my use-case. Soon after I realized that  `GassistPi` uses the Google Assistant library, which is deprecated:
+__TL;DR__: If you just want to make it work without a deep understanding, just read my [Summary](#summary) at the end of this post :)
+
+## Intro
+Like many people, I had the idea to build a Home Assistant on Raspberry Pi, with some added functionality later on. I was not sure which software to use so after some search I decided to try [GassistPi](https://github.com/shivasiddharth/GassistPi). _GassistPi_ was built for expanding Google Assistant's features, which was great for my use-case. Though it uses the _Google Assistant Library_, which is deprecated:
 >:small_red_triangle: **Warning:** The Google Assistant Library for Python is deprecated as of June 28th, 2019. Use the [Google Assistant Service](https://developers.google.com/assistant/sdk/guides/service/python/) instead.
 
-At this moment my thoughts were "deprecated is not necessarily bad, but since Google provides an alternative, I'm gonna give it a try." And that's how my story into the darkness begins...
+Deprecated is not necessarily bad, but since Google provides the new _Google Assistant SDK_ alternative I wanted to try it. And that's how my story into the darkness begins...
 
 ## Setup
-Before we start talking about the project, let me quickly introduce you to my setup as a point of reference. I use the [Raspberry Pi 3 model B]([https://www.raspberrypi.org/products/raspberry-pi-3-model-b/](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)), with [Raspbian Buster lite]([https://www.raspberrypi.org/downloads/raspbian/](https://www.raspberrypi.org/downloads/raspbian/)). For coding I use Python 3. As an audio input device I use the [PS3 Eye Camera]([https://www.amazon.com/Sony-PlayStation-Camera-Bulk-Packaging-Pc/dp/B0072I2240](https://www.amazon.com/Sony-PlayStation-Camera-Bulk-Packaging-Pc/dp/B0072I2240)). Finally, I connect my speakers in the audio jack port of RPi. I will not provide information on how to setup the above since guides are broadly available online.
+Before we walk into the dark side, let me quickly introduce you to my setup as a point of reference. I use the [Raspberry Pi 3 model B](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/), with [Raspbian Buster lite](https://www.raspberrypi.org/downloads/raspbian/). As an audio input device, I use the [PS3 Eye Camera](https://www.amazon.com/Sony-PlayStation-Camera-Bulk-Packaging-Pc/dp/B0072I2240) (everyone suggests it, and I back this up!). Finally, I connect my speakers in the audio jack port of the RPi (info for when you configure the audio devices).
+
+On the software side, I use Python 3, the Google Assistant SDK and [Snowboy](https://snowboy.kitt.ai) (I explain [below](#hotword-activation) what Snowboy is and why I use it).
+
+To set this all up, just follow Google's and Snowboy's setup instructions. And now we are all set. Deep breath and let's go...
 
 ## Google Assistant Service is ... deaf*
-After installing the Google Assistant SDK and tried a few demos, I realized they have revoked the hotword wake-up function (or _Hands-free activation_ as they call it), and instead they only provide a push-to-talk functionality... what a bummer. Read more about the GA feature support [here]([https://developers.google.com/assistant/sdk/overview](https://developers.google.com/assistant/sdk/overview)).
 
-I didn't give up though, all I had to do was to use some other hotword service to invoke the push-to-talk example they provide; then I'd be good to go implement my features!
+After installing the _Google Assistant (GA) SDK_ and tried a few demos, I realized they have revoked the hotword wake-up function (or _Hands-free activation_ as they call it), and instead they only provide a _push-to-talk_ functionality. What a bummer...
+>Read more about the Google Assistant feature support [here](https://developers.google.com/assistant/sdk/overview)
+
+I didn't give up though, all I had to do was to use some third-party hotword detection service to invoke the _push-to-talk_; then I'd be good to go implement my features!
 
 Well, at least the idea was right. In practice, it was quite a pain...
 
-\*<font color='gray' size=3>Technically, not really deaf. It can hear you if you poke it </font>:roll_eyes:
+###### \* Technically, not really deaf. It can hear you if you poke it :roll_eyes:
 
 
 ## Hotword activation
-The quest to find a hotword detection service was easy. On the first search I bumped into [Snowboy]([https://snowboy.kitt.ai/](https://snowboy.kitt.ai/)) and I stuck with it. It works great and lets you define your own hotword when training your model.
+The quest to find a hotword detection service was easy. On the first search I bumped into [Snowboy](https://snowboy.kitt.ai) and I stuck with it. It works great and lets you define your own hotword when training your model.
 
-I named mine Joe! It turns out that this was not the wisest choice since it activates with words like "joke", "hedgehog", etc., but it's fine for now. Feels like he wants to be part of our conversation every time he pops up :sweat_smile:
+I named mine _Joe_! It turns out this was not the wisest choice since it activates with words like "joke", "hedgehog", "George", etc., but it's fine for now. Feels like he wants to be part of our conversation every time he pops up, which is fun for now :)
 
 The setup is straightforward:
-```shell
+```bash
 cd ~
 git clone https://github.com/Kitt-AI/snowboy.git
 cd snowboy/swig/Python3
 make
 ```
 
-They provide some demos on `snowboy/examples/Python3`. Everything ran perfectly fine, so then it was time to alter one of the demos and call the Google Assistant push-to-talk. I started getting the feeling that this will not be as simple as it sounds (oh boy, was I right...), so I started looking at how other people had gone on that.
+They provide some demos on `snowboy/examples/Python3`. Everything ran perfectly fine, so then it was time to alter one of the demos and call the Google Assistant's _push-to-talk_. I started getting the feeling that this will not be as simple as it sounds (oh boy, was I right...), so I started looking at how other people had gone on that.
 
 
 ## Diving deep
-One of the most comprehensive guides I found was this one: [Google Assistant with snowboy Hotword Recognition]([https://www.sigmdel.ca/michel/ha/rpi/voice_rec_02_en.html](https://www.sigmdel.ca/michel/ha/rpi/voice_rec_02_en.html)) (plus they provide scripts with things they have tried; big thanks!). The article is written in 2018, however, it makes use of the GA Service, not the GA library, as it is explained on [step 6]([https://www.sigmdel.ca/michel/ha/rpi/voice_rec_02_en.html#GA](https://www.sigmdel.ca/michel/ha/rpi/voice_rec_02_en.html#GA)). At the same step, they explain how to use _Snowboy_ to invoke _pushtotalk_. The process of doing that is far more complex from what I was aiming for:
-* Call _Snowboy_ with your hotword
-* Your query is recorded on a `.wav` file
-* The GA _pushtotalk_ is called using `subprocess`, passing the recorded `.wav` file as argument
-* The response is also saved as a `.wav` file
-* Another `subprocess` is used to call `aplay` to play the response from GA
+One of the most comprehensive guides I found was this one: [Google Assistant with snowboy Hotword Recognition](https://www.sigmdel.ca/michel/ha/rpi/voice_rec_02_en.html) (plus they provide scripts with things they have tried; big thanks!). The article is written in 2018, however, it makes use of the _GA Service_, not the _GA Library_, as it is explained on [step 6](https://www.sigmdel.ca/michel/ha/rpi/voice_rec_02_en.html#GA). At the same step, they explain how to use _Snowboy_ to invoke _push-to-talk_, however, the process of doing so is far more complex than what I was aiming for:
+* Call _Snowboy_ using your hotword
+* Your query is recorded and saved on a `.wav` file
+* A `subprocess` is used to call _push-to-talk_, passing the `.wav` file as argument
+* The response from GA is also saved as a `.wav` file
+* Another `subprocess` is used to call `aplay` to play the response
 
-In general, I avoid using `subprocess` if possible, and this solution felt like an overkill. What was closer to my desire is described as a failure on the next step ([step 7]([https://www.sigmdel.ca/michel/ha/rpi/voice_rec_02_en.html#SnowGA](https://www.sigmdel.ca/michel/ha/rpi/voice_rec_02_en.html#SnowGA))). In fact it starts like "_Why use a sub process to invoke a Python script within a Python script?_"
-However, the problem they faced comes up a few lines later: _"Note that `pushtotalk.main` ... never returns in `detectedCallback`. ... Instead, the program exits without explanation."_ Furthermore, they also state that the author of `GassistPi` recognized this as a Google issue. It is also mentioned that the support for _Snowboy_ was removed from `GAssistPi` _"because of a problematic interaction with  `Portaudio`."_
-Well, now I had some work to do! :smiley:
+In general, I avoid using `subprocess` if possible, and this solution felt like an overkill. What was closer to my desire is described as a failure on the next step ([step 7](https://www.sigmdel.ca/michel/ha/rpi/voice_rec_02_en.html#SnowGA)). In fact, it starts like "_Why use a sub process to invoke a Python script within a Python script?_"
+
+However, the problem they faced comes up a few lines later:
+>_"Note that `pushtotalk.main` ... never returns in `detectedCallback`. ... Instead, the program exits without explanation."_
+
+Furthermore, they also state that the author of _GassistPi_ recognized this as a Google issue. It is also mentioned that the support for _Snowboy_ was removed from _GAssistPi_ _"because of a problematic interaction with  `Portaudio`."_
+
+Well, now I had some work to do! :D
 
 ## Reuse previous knowledge
+Theory is good, but I needed to test what they have done for myself. Thus, I downloaded the provided scripts and started playing around. The first step is to store the [talkassist.py](https://www.sigmdel.ca/michel/ha/rpi/dnld/talkassist.py) at the same location as the `pushtotalk.py`, and the [googlesamples-assistant-talkassist](https://www.sigmdel.ca/michel/ha/rpi/dnld/googlesamples-assistant-talkassist) at the same location as the `googlesamples-assistant-pushtotalk`. The `talkassist.py` is a modified `pushtotalk.py` that overpasses waiting for key-press. Since they are both very similar, I will only use the term __`talkassist`__ from now on.
 
-Theory is good, but I needed to test what they have done for myself. Thus, I downloaded the provided scripts and started playing around. The first step is to store the [`talkassist.py`](https://www.sigmdel.ca/michel/ha/rpi/dnld/talkassist.py) at the same location as the `pushtotalk.py`, and the [`googlesamples-assistant-talkassist`](https://www.sigmdel.ca/michel/ha/rpi/dnld/googlesamples-assistant-talkassist) at the same location as the `googlesamples-assistant-pushtotalk`. The `talkassist.py` is a modified `pushtotalk.py` that overpasses waiting for key-press. From the rest of the scripts, I only downloaded the scripts that invoke the assistant through a function call and not using subprocess (these are [`sbdemo7.py`](https://www.sigmdel.ca/michel/ha/rpi/dnld/sbdemo7.py) and [`sbdemo7e.py`](https://www.sigmdel.ca/michel/ha/rpi/dnld/sbdemo7e.py)). I placed these scripts in the _Snowboy_'s _examples_ directory. They are both very similar since they are reworked versions of the original _demo4_ of _Snowboy_, so I will focus only on one of them.
+From the rest of the scripts, I only downloaded the scripts that invoke the assistant through a function call and not using subprocess (these are [sbdemo7.py](https://www.sigmdel.ca/michel/ha/rpi/dnld/sbdemo7.py) and [sbdemo7e.py](https://www.sigmdel.ca/michel/ha/rpi/dnld/sbdemo7e.py)). I placed these scripts in the _Snowboy_'s _examples_ directory. They are both very similar since they are reworked versions of the original `demo4.py` of _Snowboy_, so I will only mention `sbdemo7.py` from now on.
 
-First, I had to modify the script before I start using it. The script makes use of a package called `pixels`, which handles LED lights. Since I am not using LEDs I did not bother installing it, so I just removed any code that had to do with it. Next, I linked my trained model and ran the script:
-```shell
+Initially, I had to modify the script before I start using it. First, it makes use of a package called `pixels` to handle the indication LEDs of the [ReSpeaker](https://respeaker.io/6_mic_array/) mic array. Since I am using the _PS3 Eye cam_ as a mic, I did not bother installing that package. Insted I just commented out any code that had to do with it. Next, I linked my trained _Snowboy_ model and ran the script:
+```bash
 $ python sbdemo7.py
 Listening... Press Ctrl+C to exit
 ```
-While it seemed to be working, when my key-word got detected this was the outcome:
-```shell
+While it seemed to be working, when my _hotword_ got detected this was the outcome:
+```bash
 INFO:snowboy:Keyword 1 detected at time: 2019-12-07 23:15:55
 yes...Expression 'ret' failed in 'src/hostapi/alsa/pa_linux_alsa.c', line: 1736
 Expression 'AlsaOpen( &alsaApi->baseHostApiRep, params, streamDir, &self->pcm )' failed in 'src/hostapi/alsa/pa_linux_alsa.c', line: 1904
@@ -90,9 +104,9 @@ Traceback (most recent call last):
 sounddevice.PortAudioError: Error opening RawStream: Device unavailable [PaErrorCode -9985]
 
 ```
-Searching about this problem led me to the Google Assistant SDK github [issue #219]([https://github.com/googlesamples/assistant-sdk-python/issues/219](https://github.com/googlesamples/assistant-sdk-python/issues/219)), which points to a fix on [issue #228]([https://github.com/googlesamples/assistant-sdk-python/pull/228](https://github.com/googlesamples/assistant-sdk-python/pull/228)), which [reverts to shared audio stream]([https://github.com/googlesamples/assistant-sdk-python/pull/228/commits/ec296e9a83fcb0ba6f22905b22e8546d98cfce43](https://github.com/googlesamples/assistant-sdk-python/pull/228/commits/ec296e9a83fcb0ba6f22905b22e8546d98cfce43)). Though this fix was already implemented in my downloaded version, so it had to be something else.
+Searching about this problem led me to the GA SDK GitHub [issue #219](https://github.com/googlesamples/assistant-sdk-python/issues/219), which points to a fix on [issue #228](https://github.com/googlesamples/assistant-sdk-python/pull/228), which [reverts to shared audio stream](https://github.com/googlesamples/assistant-sdk-python/pull/228/commits/ec296e9a83fcb0ba6f22905b22e8546d98cfce43). However, this fix was already implemented in my downloaded version, so it had to be something else.
 
-Thinking about it logically, I realized that the google assistant tries to use a stream that is already being used. This made it pretty clear that the stream remains open by _Snowboy_; ooh boy... Or so I thought! For a moment it seemed like I have to dive deep into _Snowboy_ to fix that. Luckily, by looking better at the `sbdemo7.py` and exploring how the `HotwordDetector` class of the `snowboydecoder` works, I realized that they start the detector, but they do not close it before invoking google assistant, but only after google assistant has returned:
+Thinking about it logically, I realized that the GA tries to use a stream that is already being used. Suddenly, it became pretty clear that the stream used by _Snowboy_ must remain open. For a moment it seemed like I have to dive deep into _Snowboy_ to fix that. Luckily, by exploring how the `HotwordDetector` class works, and by looking better at the `sbdemo7.py` I realized what is wrong. In the `sbdemo7.py`, although they start the detector, they do not close it before invoking the GA. They only close it after GA has returned:
 ```python
 def detectedCallback():
     if detectedSignal > 2:
@@ -105,7 +119,8 @@ def detectedCallback():
     main() # in googlesamples.assistant.grpc.talkassist
     print('\nListening... Press Ctrl+C to exit')
 
-detector = snowboydecoder.HotwordDetector(SnowboyModel, sensitivity=0.5)
+detector = snowboydecoder.HotwordDetector(SnowboyModel,
+										sensitivity=0.5)
 print('Listening... Press Ctrl+C to exit')
 
 # main loop
@@ -113,7 +128,7 @@ detector.start(detected_callback=detectedCallback,
                interrupt_check=interrupt_callback,
                sleep_time=sleepTime)
 
-detector.terminate()
+detector.terminate() # Terminates after callback finished
 ```
 So, I added a line to terminate the detector before the assistant is called:
 ```python
@@ -125,20 +140,20 @@ def detectedCallback():
         pass
     if detectedSignal > 0:
         print('yes...', end='', flush=True)
-        
-    # Terminate detector to free the audio stream for the GAssistant
-    detector.terminate()
+
+    detector.terminate() # Terminate before call pushtotalk.main
     main() # in googlesamples.assistant.grpc.talkassist
     print('\nListening... Press Ctrl+C to exit')
-
 ```
- And it worked moving away from that error! The result: I got to ask a single question, then it stopped. The reason is that the Google assistant (`pushtotalk.main` or `talkassist.main`) does not return properly and just exits. With this, we reach the point where, as described before, they agreed that this is an issue coming from the Google Assistant SDK. :deep breath:
+When I ran it again, no error popped up... yay! However, I only got to ask a single question; then it stopped. The reason is that the _Google Assistant_ (specifically `talkassist.main`) does not return properly and just exits. With this, we reach the point where, as described above, they agreed that this is an issue coming from the _Google Assistant SDK_.
+
+So, let's see what we got here and what we can do about it.
 
 ## Getting my hands dirty
-To examine the reasons why the `talkassist.main()` does not return we have to see what is going on in the `talkassist.py` (or `pushtotalk.py`). But before we get there, I have to admit I was lucky to get a big hint that would point me in the right direction and resulting in solving the problem in the long run.
+To examine the reasons why the `talkassist.main()` does not return we have to see what is going on in the `talkassist.py`. But before we get there, I will describe how I got a big hint that would point me in the right direction and resulting in solving the problem in the long run.
 
-So, when I was asking a question (the only one I was allowed to ask before it stops), I noticed that for bigger answers I was getting a warning message:
-```shell
+So, when I was asking a question (the only one I was allowed to ask before it stops), I noticed that bigger answers were giving a warning message:
+```bash
 $ python sbdemo7.py
 Listening... Press Ctrl+C to exit
 INFO:snowboy:Keyword 1 detected at time: 2019-12-07 23:57:53
@@ -147,22 +162,23 @@ WARNING:root:SoundDeviceStream write underflow (size: 4000)
 WARNING:root:SoundDeviceStream write underflow (size: 4000)
 WARNING:root:SoundDeviceStream write underflow (size: 4000)
 ```
-Googling about it, I found on [issue #12](https://github.com/googlesamples/assistant-sdk-python/issues/12#issuecomment-299081964) that you can set the argument `--audio-block-size` to some bigger value:
-```shell
+Googling about it, I found on [issue #12](https://github.com/googlesamples/assistant-sdk-python/issues/12#issuecomment-299081964) that you can set the argument ```--audio-block-size``` to some bigger value:
+```bash
 python -m googlesamples.assistant  --audio-block-size=4096
 ```
-This means that the `pushtotalk.main` (or `talkassist.main` in our case) takes this argument. As a matter of fact, here is the definition of the `main()`:
+And of course we can find the argument on the definition of the
+`talkassist.main()`:
 ```python
 def main(api_endpoint, credentials, project_id,
          device_model_id, device_id, device_config, lang, verbose,
-         input_audio_file, output_audio_file,
-         audio_sample_rate, audio_sample_width,
-         audio_iter_size, audio_block_size, audio_flush_size,
+         input_audio_file, output_audio_file, audio_sample_rate,
+         audio_sample_width, audio_iter_size, audio_flush_size,
+         audio_block_size,
          grpc_deadline, once, *args, **kwargs):
 ```
-So, I thought I could change the invocation of `main()` in `sbdemo7.py` to `main(audio_block_size=4096)`. Hint: it didn't work.
+So, I thought I could change the invocation of `main()` in `sbdemo7.py` to `main(audio_block_size=4096)`. Long story short: it didn't work.
 
-Looking closer to the `pushtotalk.main()` I could see a set of decorators on top of it, which could play a role on this weird behaviour:
+Looking closer to the `talkassist.main()` I could see a set of decorators on top of it, which could play a role on this weird behaviour:
 ```python
 @click.command()
 @click.option('--api-endpoint', default=ASSISTANT_API_ENDPOINT,
@@ -241,17 +257,16 @@ def main(api_endpoint, credentials, project_id,
          audio_iter_size, audio_block_size, audio_flush_size,
          grpc_deadline, once, *args, **kwargs):
 ```
-Prior to that I knew nothing about the very existence of the `click` package (apologies if I insult anyone :man_shrugging:). From its [API documentation]([https://click.palletsprojects.com/en/5.x/api/](https://click.palletsprojects.com/en/5.x/api/)):
-
->click.command(name=None, cls=None, **attrs)
+Prior to that I had no idea about the very existence of the _Click_ package. From its [API documentation](https://click.palletsprojects.com/en/5.x/api/):
+```
+click.command(name=None, cls=None, **attrs)
 	Creates a new 'Command' and uses the decorated function as callback.
 	This will also automatically attach all decorated 'option()'s and
 	'argument()'s as parameters to the command.
+```
+Hmm, so it forms the command with the decorators and it looks like an argument can only be overwritten by calling the function directly from the command line. Since I do not need to call it from the command line, I'd first try to remove the decorators completely and see what happens. Then, if that's too optimistic, I'd come back to see if I can find any `click` options that allow `talkassist.main` to return normally.
 
-
-Hmm, so it forms the command with the decorators and it looks like an argument can only be overwritten by calling the function directly from the command line. Since I do not need to call it from the command line, I first tried to remove the decorators completely and see what happens. Then, if that was too optimistic, I would come back to see if I can find any `click` options that would allow `talkassist.main` to return normally.
-
-Thus copied all the default arguments on the decorators, in the definition of the function. The changes are shown below:
+Thus, I copied all the default arguments on the decorators, in the definition of the function:
 ```python
 def main(api_endpoint=ASSISTANT_API_ENDPOINT,
         credentials=os.path.join(click.get_app_dir('google-oauthlib-tool'), 'credentials.json'),
@@ -271,7 +286,7 @@ def main(api_endpoint=ASSISTANT_API_ENDPOINT,
         once=False,
         grpc_deadline=DEFAULT_GRPC_DEADLINE):
 ```
-Back to `sbdemo7.py` we have to add a while loop, because if the assistant returns the program will exit, but we need it to be there for us and detect more spoken hotwords. So:
+Back to `sbdemo7.py` we have to add a while loop. Otherwise, when the assistant returns the program will finish and exit, but we need it to be there for us to detect more spoken enquiries. So:
 ```python
 # main loop
 while True:
@@ -280,7 +295,7 @@ while True:
                sleep_time=sleepTime)
 ```
 Test time:
-```shell
+```bash
 $ python sbdemo7.py
 Listening... Press Ctrl+C to exit
 INFO:snowboy:Keyword 1 detected at time: 2019-12-08 18:22:53
@@ -300,13 +315,13 @@ yes...WARNING:root:SoundDeviceStream write underflow (size: 1600)
 WARNING:root:SoundDeviceStream write underflow (size: 1600)
 WARNING:root:SoundDeviceStream write underflow (size: 1600)
 ```
-IT WORKED!!! :sob::sob::sob: *
+IT WORKED!!! :sob: *
 
-\* <font color='gray' size=3>That was my last attempt at 3:30 am on a Saturday (well... Sunday), with a girlfriend already pissed off of me shouting "Hey Joe" all night while she's trying to sleep. I'm sure some of you will sympathize with me! </font>:relieved:
+###### \* That was my last shot before I give up for the night. It was 3:30 am, with my girlfriend already pissed off of me shouting "Hey Joe!" all night, while she's trying to sleep. Some of you will understand!
 
 ## Final touch
 
-To make things easier, my plan for now is to have the google sample code available in any directory I want. To achieve this I made a copy of the `talkassist.py` and named it `custom_assist.py`. I placed it in the _Snowboy_'s example directory (`~/snowboy/examples/Python3/`), and thus I also had to change part of the imports, from:
+To make things easier, my plan for now is to have the google sample code available in any directory I want. To achieve this I made a copy of the `talkassist.py` and named it `custom_assist.py`. I placed it in the _Snowboy_'s example directory (`snowboy/examples/Python3/`), and thus I also had to change part of the imports, from:
 ```python
 try:
     from . import (
@@ -324,8 +339,7 @@ try:
         device_helpers
     )
 ```
- I also cleaned the file from unnecessary code that was not expected to be used (shown as commented):
-
+ I also cleaned the file from unnecessary code that was not expected to be used yet (shown as commented):
 ```python
     # @device_handler.command('action.devices.commands.OnOff')
     # def onoff(on):
@@ -349,3 +363,19 @@ try:
                 break
 ```
 
+## Summary
+Here I described how I solved the lack of voice activation of the new _Google Assistant SDK_. I did that by using _Snowboy_ for hotword detection, an approach that more people have tried without success. I short, the main issues were two:
+1. To remove the `@click` decorators from the Google sample code to allow it to be used as a normal function.
+2. To close the audio stream used by _Snowboy_, before invoking the Google assistant.
+
+Follow these steps to make it work yourself:
+1. Make sure your setup is as I described in the [Setup](#setup) paragraph
+   * Install the [_Google Assistant Service_](https://developers.google.com/assistant/sdk/overview)
+   * Install [_Snowboy_](https://snowboy.kitt.ai), and train/configure your own hotword model
+   * Do the appropriate tests to ensure your mic and speakers are functional and configured correctly
+2. Download my corrected demo version [demo_assist.py](), and place it in `snowboy/examples/Python3`
+3. Download my corrected version of the Google Assistant _push-to-talk_ [invoke_assistant.py](), and also place it in `snowboy/examples/Python3`
+4. Run ```$ python demo_assist.py```
+5. Enjoy chatting with your new assistant :)
+
+I hope you found this post helpful. Let me know below if you think I missed anything, or if something didn't work for you as explained.
