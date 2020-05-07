@@ -364,11 +364,11 @@ try:
 ```
 
 ## Summary
-Here I described how I solved the lack of voice activation of the new _Google Assistant SDK_. I did that by using _Snowboy_ for hotword detection, an approach that more people have tried without success. In short, the main issues were two:
-1. To remove the `@click` decorators from the Google sample code to allow it to be used as a normal function.
-2. To close the audio stream used by _Snowboy_, before invoking the Google assistant.
+In this post, I described how I solved the lack of voice activation of the new _Google Assistant SDK_. I did that using _Snowboy_ for hotword detection, an approach that more people have tried without success. In short, the main fixes were two:
+1. Removing the `@click` decorators from the Google sample code to allow it to be used as a normal function.
+2. Closing the audio stream used by _Snowboy_, before invoking the Google assistant.
 
-Follow these steps to make it work yourself:
+Follow these steps to make it work for yourself:
 1. Make sure your setup is as I described in the [Setup](#setup) paragraph
    * Install the [_Google Assistant Service_](https://developers.google.com/assistant/sdk/overview)
    * Install [_Snowboy_](https://snowboy.kitt.ai), and train/configure your own hotword model
