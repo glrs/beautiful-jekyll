@@ -364,7 +364,7 @@ try:
 ```
 
 ## Summary
-Here I described how I solved the lack of voice activation of the new _Google Assistant SDK_. I did that by using _Snowboy_ for hotword detection, an approach that more people have tried without success. I short, the main issues were two:
+Here I described how I solved the lack of voice activation of the new _Google Assistant SDK_. I did that by using _Snowboy_ for hotword detection, an approach that more people have tried without success. In short, the main issues were two:
 1. To remove the `@click` decorators from the Google sample code to allow it to be used as a normal function.
 2. To close the audio stream used by _Snowboy_, before invoking the Google assistant.
 
