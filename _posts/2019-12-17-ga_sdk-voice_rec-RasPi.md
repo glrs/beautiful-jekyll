@@ -51,7 +51,7 @@ They provide some demos on `snowboy/examples/Python3`. Everything ran perfectly 
 
 
 ## Diving deep
-One of the most comprehensive guides I found was this one: [Google Assistant with snowboy Hotword Recognition](https://www.sigmdel.ca/michel/ha/rpi/voice_rec_02_en.html) (plus they provide scripts with things they have tried; big thanks!). The article is written in 2018, however, it makes use of the _GA Service_, not the _GA Library_, as it is explained on [step 6](https://www.sigmdel.ca/michel/ha/rpi/voice_rec_02_en.html#GA). At the same step, they explain how to use _Snowboy_ to invoke _push-to-talk_, however, the process of doing so is far more complex than what I was aiming for:
+One of the most comprehensive guides I found was this one: [Google Assistant with snowboy Hotword Recognition](https://www.sigmdel.ca/michel/ha/rpi/voice_rec_02_en.html) (plus they provide scripts with things they have tried; big thanks!). The article is written in 2018 and it makes use of the _GA Service_, not the _GA Library_, as it is explained on [step 6](https://www.sigmdel.ca/michel/ha/rpi/voice_rec_02_en.html#GA). At the same step, they explain how to use _Snowboy_ to invoke _push-to-talk_, however, the process of doing so is far more complex than what I was aiming for:
 * Call _Snowboy_ using your hotword
 * Your query is recorded and saved on a `.wav` file
 * A `subprocess` is used to call _push-to-talk_, passing the `.wav` file as argument
