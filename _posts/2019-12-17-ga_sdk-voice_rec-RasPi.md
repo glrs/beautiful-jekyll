@@ -37,7 +37,7 @@ Well, at least the idea was right. In practice, it was quite a pain...
 ## Hotword activation
 The quest to find a hotword detection service was easy. On the first search I bumped into [Snowboy](https://snowboy.kitt.ai) and I stuck with it. It works great and lets you define your own hotword when training your model.
 
-I named mine _Joe_! It turns out this was not the wisest choice since it activates with words like "joke", "hedgehog", "George", etc., but it's fine for now. Feels like he wants to be part of our conversation every time he pops up, which is fun for now :)
+I named mine _Joe_! It turns out this was not the wisest choice since it activates with words like "joke", "hedgehog", "George", etc., but it's fine for now. Feels like he wants to be part of our conversation every time he pops up, which is fun until it becomes annoying :)
 
 The setup is straightforward:
 ```bash
