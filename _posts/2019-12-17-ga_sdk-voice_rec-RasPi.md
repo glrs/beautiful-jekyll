@@ -152,7 +152,7 @@ So, let's see what we got here and what we can do about it.
 ## Getting my hands dirty
 To examine the reasons why the `talkassist.main()` does not return we have to see what is going on in the `talkassist.py`. But before we get there, I will describe how I got a big hint that would point me in the right direction and resulting in solving the problem in the long run.
 
-So, when I was asking a question (the only one I was allowed to ask before it stops), I noticed that bigger answers were giving a warning message:
+So, when I was asking a question (the only one I was allowed to ask before it stops), I noticed that longer answers were giving a warning message:
 ```bash
 $ python sbdemo7.py
 Listening... Press Ctrl+C to exit
