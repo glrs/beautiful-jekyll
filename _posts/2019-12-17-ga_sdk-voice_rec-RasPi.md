@@ -374,9 +374,21 @@ Follow these steps to make it work for yourself:
    * Install [_Snowboy_](https://snowboy.kitt.ai), and train/configure your own hotword model
    * Do the appropriate tests to ensure your mic and speakers are functional and configured correctly
 2. Download my corrected demo version [demo_assist.py](https://drive.google.com/file/d/1P71b6gsRvMl9gPqyu7dceMPmwudojvW9/view?usp), and place it in `snowboy/examples/Python3`
-3. Download my corrected version of the Google Assistant _push-to-talk_ [call_assistant.py](https://drive.google.com/file/d/1RmIGO3dfL6lZ4cC7Xwo_lm8MCdH-WYMe/view?usp), and also place it in `snowboy/examples/Python3`
+3. Download my corrected version of the Google Assistant _push-to-talk_ [call_assist.py](https://drive.google.com/file/d/1RmIGO3dfL6lZ4cC7Xwo_lm8MCdH-WYMe/view?usp), and also place it in `snowboy/examples/Python3`
 4. Run ```$ python demo_assist.py```
 5. Enjoy chatting with your new assistant :)
+
+#### Troubleshooting
+If you get the following error:
+```
+Traceback (most recent call last):
+  File "demo_assist.py", line 4, in <module>
+    import snowboydecoder
+  File "/home/pi/snowboy/examples/Python3/snowboydecoder.py", line 5, in <module>
+    from . import snowboydetect
+ImportError: attempted relative import with no known parent package
+```
+Simply open the `/home/pi/snowboy/examples/Python3/snowboydecoder.py` and replace `from . import snowboydetect` with `import snowboydetect`.
 
 I hope you found this post helpful. Let me know below if you think I missed anything, and I'd love if you share any cool projects you created on it :D
 
